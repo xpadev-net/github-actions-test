@@ -14,7 +14,7 @@ jobs:
       - run: echo '${{github.event.release.description}}'
       - run: echo '${{github.event.release.descriptionHTML}}'
       - run: ls -la
-      - run: echo ${{github.event.release.body}} > body.txt
+      - run: echo '${{github.event.release.body}}' > body.txt
       - run: sed --in-place --expression='s/\n/\\r/' ./body.txt
       - run: sed --in-place --expression='s/[title]/${{github.event.release.name}}/' ./message.json
       - run: sed --in-place --expression='s/[body]/`echo body.txt`/' ./message.json
