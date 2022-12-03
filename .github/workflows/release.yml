@@ -17,9 +17,10 @@ jobs:
       - run: echo '${{github.event.release.body}}' > body.txt
       - run: sed --in-place --expression='s/\n/\\r/' ./body.txt
       - run: sed --in-place --expression='s/[title]/${{github.event.release.name}}/' ./message.json
-      - run: sed --in-place --expression='s/[body]/`echo body.txt`/' ./message.json
+      - run: sed --in-place --expression='s/[body]/`more body.txt`/' ./message.json
       - run: sed --in-place --expression='s/\n/ /' ./message.json
       - run: |
+          echo `more message.json`
           curl -X POST -F 'payload_json=`more message.json`' "$DISCORD"
         env:
           DISCORD: ${{secrets.DISCORD}}
