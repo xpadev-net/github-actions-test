@@ -18,6 +18,6 @@ jobs:
           export BODY='${{github.event.release.body}}'
           JSON=`node format.js`
           echo $JSON
-          curl -X POST -F "payload_json=$JSON" "$DISCORD"
+          curl -X POST -F "payload_json=$JSON" -F "file1=@test.txt" "$DISCORD"
         env:
           DISCORD: ${{secrets.DISCORD}}
