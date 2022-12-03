@@ -12,11 +12,10 @@ jobs:
       - run: echo '${{github.event.release.body}}'
       - run: echo '${{github.event.release.description}}'
       - run: echo '${{github.event.release.descriptionHTML}}'
+      - run: sed --in-place --expression='s/[title]/${{github.event.release.name}}/' .github/workflows/message.json
+      - run: sed --in-place --expression='s/[body]/${{github.event.release.body}}/' .github/workflows/message.json
+      - run: sed --in-place --expression='s/\n/ /' .github/workflows/message.json
       - run: |
-          echo $DISCORD
-        env:
-          DISCORD: ${{secrets.DISCORD}}
-      - run: |
-          curl -X POST -F 'payload_json={"username": "ツール配信bot","content": "新しいバージョンのリリースのお知らせです😎","embeds": [{"title":"${{github.event.release.name}}","description":"${{github.event.release.body}}","color":51711}]}' "$DISCORD"
+          curl -X POST -F 'payload_json=`echo .github/workflows/message.json`' "$DISCORD"
         env:
           DISCORD: ${{secrets.DISCORD}}
