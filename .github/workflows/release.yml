@@ -2,6 +2,8 @@ on:
   release:
     types: [published]
 
+env:
+  DISCORD: ${{ secrets.discord }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -10,8 +12,6 @@ jobs:
       - run: echo '${{github.event.release.body}}'
       - run: echo '${{github.event.release.description}}'
       - run: echo '${{github.event.release.descriptionHTML}}'
-      - shell: bash
-        env:
-          discord: ${{ secrets.discord }}
-        run: |
-          curl -X POST -F 'payload_json={"username": "ツール配信bot","content": "新しいバージョンのリリースのお知らせです😎","embeds": [{"title":"${{github.event.release.name}}","description":"${{github.event.release.body}}","color":51711}]}' "$discord"
+      - run: |
+          echo $discord
+          curl -X POST -F 'payload_json={"username": "ツール配信bot","content": "新しいバージョンのリリースのお知らせです😎","embeds": [{"title":"${{github.event.release.name}}","description":"${{github.event.release.body}}","color":51711}]}' "${{ secrets.discord }}"
