@@ -18,7 +18,7 @@ jobs:
           version: ${{github.event.release.tag_name}}
           file: "${{github.event.release.name}}.zip"
           target: "${{github.event.release.name}}.zip"
-          token: ${{ secrets.YOUR_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: notify
         run: |
           export NAME='${{github.event.release.name}}'
