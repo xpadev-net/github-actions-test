@@ -12,12 +12,19 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
+      - uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: ${{ github.repository }}
+          version: ${{github.event.release.tag_name}}
+          file: "${{github.event.release.name}}.zip"
+          target: "${{github.event.release.name}}.zip"
+          token: ${{ secrets.YOUR_TOKEN }}
       - name: notify
         run: |
           export NAME='${{github.event.release.name}}'
           export BODY='${{github.event.release.body}}'
           JSON=`node format.js`
           echo $JSON
-          curl -X POST -F "payload_json=$JSON" -F "file1=@test.txt" "$DISCORD"
+          curl -X POST -F "payload_json=$JSON" -F "file1=@${{github.event.release.name}}.zip" "$DISCORD"
         env:
           DISCORD: ${{secrets.DISCORD}}
