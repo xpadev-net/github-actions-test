@@ -8,3 +8,4 @@ jobs:
     steps:
       - run: echo ${{github.event.release.name}}
       - run: echo ${{github.event.release.description}}
+      - run: echo ${{github.event.release.descriptionHTML}}
