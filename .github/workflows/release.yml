@@ -6,11 +6,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Hello world action
-        with: # Set the secret as an input
-          discord: ${{ secrets.discord }}
-        env: # Or as an environment variable
-          discord: ${{ secrets.discord }}
       - run: echo '${{github.event.release.name}}'
       - run: echo '${{github.event.release.body}}'
       - run: echo '${{github.event.release.description}}'
