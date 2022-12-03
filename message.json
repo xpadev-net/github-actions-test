@@ -3,8 +3,8 @@
   "content": "新しいバージョンのリリースのお知らせです😎",
   "embeds": [
 	{
-	  "title":"[title]",
-	  "description":"[body]",
+	  "title":"<title>",
+	  "description":"<body>",
 	  "color":51711
 	}
   ]

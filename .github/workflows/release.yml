@@ -9,16 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: echo '${{github.event.release.name}}'
-      - run: echo '${{github.event.release.body}}'
-      - run: echo '${{github.event.release.description}}'
-      - run: echo '${{github.event.release.descriptionHTML}}'
-      - run: ls -la
-      - run: echo '${{github.event.release.body}}' > body.txt
-      - run: sed --in-place --expression='s/\n/\\r/' ./body.txt
-      - run: sed --in-place --expression='s/[title]/${{github.event.release.name}}/' ./message.json
-      - run: sed --in-place --expression='s/[body]/`more body.txt`/' ./message.json
-      - run: sed --in-place --expression='s/\n/ /' ./message.json
+      - run: |
+          echo '${{github.event.release.body}}' > body.txt
+          BODY = `more body.txt`
+          sed --in-place --expression='s/\n/\\r/' ./body.txt
+          sed --in-place --expression='s/<title>/${{github.event.release.name}}/' ./message.json
+          sed --in-place --expression='s/<body>/$BODY/' ./message.json
+          sed --in-place --expression='s/\n/ /' ./message.json
       - run: |
           echo `more message.json`
           curl -X POST -F 'payload_json=`more message.json`' "$DISCORD"
