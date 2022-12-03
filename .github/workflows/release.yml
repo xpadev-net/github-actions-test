@@ -20,6 +20,7 @@ jobs:
       - run: sed --in-place --expression='s/[body]/`echo body.txt`/' ./message.json
       - run: sed --in-place --expression='s/\n/ /' ./message.json
       - run: |
+          echo message.json
           curl -X POST -F 'payload_json=`echo message.json`' "$DISCORD"
         env:
           DISCORD: ${{secrets.DISCORD}}
