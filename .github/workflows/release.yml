@@ -9,16 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
       - run: |
-          echo '${{github.event.release.body}}' > body.txt
-          BODY=`more body.txt`
-          sed --in-place --expression="s/\n/\\r/" ./body.txt
-          cat body.txt
-          sed --in-place --expression='s/<title>/${{github.event.release.name}}/' ./message.json
-          sed --in-place --expression="s/<body>/$BODY/" ./message.json
-          sed --in-place --expression='s/\n/ /' ./message.json
-      - run: |
-          JSON=$(cat ./message.json)
+          NAME='${{github.event.release.name}}'
+          BODY='${{github.event.release.body}}'
+          JSON=`node format.js`
           curl -X POST -F 'payload_json=$JSON' "$DISCORD"
         env:
           DISCORD: ${{secrets.DISCORD}}
