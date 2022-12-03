@@ -12,7 +12,8 @@ jobs:
       - run: |
           echo '${{github.event.release.body}}' > body.txt
           BODY=`more body.txt`
-          sed --in-place --expression='s/\n/\\r/' ./body.txt
+          sed --in-place --expression="s/\n/\\r/" ./body.txt
+          cat body.txt
           sed --in-place --expression='s/<title>/${{github.event.release.name}}/' ./message.json
           sed --in-place --expression="s/<body>/$BODY/" ./message.json
           sed --in-place --expression='s/\n/ /' ./message.json
