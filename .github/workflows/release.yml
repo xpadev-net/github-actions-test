@@ -12,9 +12,10 @@ jobs:
       - run: echo '${{github.event.release.body}}'
       - run: echo '${{github.event.release.description}}'
       - run: echo '${{github.event.release.descriptionHTML}}'
-      - run: sed --in-place --expression='s/[title]/${{github.event.release.name}}/' message.json
-      - run: sed --in-place --expression='s/[body]/${{github.event.release.body}}/' message.json
-      - run: sed --in-place --expression='s/\n/ /' message.json
+      - run: ls -la
+      - run: sed --in-place --expression='s/[title]/${{github.event.release.name}}/' ./message.json
+      - run: sed --in-place --expression='s/[body]/${{github.event.release.body}}/' ./message.json
+      - run: sed --in-place --expression='s/\n/ /' ./message.json
       - run: |
           curl -X POST -F 'payload_json=`echo message.json`' "$DISCORD"
         env:
