@@ -9,4 +9,5 @@ const message = {
     }
   ]
 };
-console.log(JSON.stringify(message));
+console.log(process.env)
+console.log(message);

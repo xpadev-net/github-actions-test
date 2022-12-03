@@ -14,11 +14,10 @@ jobs:
           node-version: 18.x
       - name: notify
         run: |
-          NAME='${{github.event.release.name}}'
-          BODY='${{github.event.release.body}}'
+          export NAME='${{github.event.release.name}}'
+          export BODY='${{github.event.release.body}}'
           JSON=`node format.js`
-          echo $name
           echo $JSON
-          curl -X POST -F 'payload_json=$JSON' "$DISCORD"
+          curl -X POST -F "payload_json=$JSON" "$DISCORD"
         env:
           DISCORD: ${{secrets.DISCORD}}
