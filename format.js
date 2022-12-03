@@ -9,5 +9,4 @@ const message = {
     }
   ]
 };
-console.log(process.env)
 console.log(message);
