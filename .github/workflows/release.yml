@@ -12,10 +12,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
-      - run: |
+      - name: notify
+        run: |
           NAME='${{github.event.release.name}}'
           BODY='${{github.event.release.body}}'
           JSON=`node format.js`
+          echo $name
+          echo $JSON
           curl -X POST -F 'payload_json=$JSON' "$DISCORD"
         env:
           DISCORD: ${{secrets.DISCORD}}
