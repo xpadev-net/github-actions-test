@@ -6,10 +6,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Hello world action
+        with: # Set the secret as an input
+          discord: ${{ secrets.discord }}
+        env: # Or as an environment variable
+          discord: ${{ secrets.discord }}
       - run: echo '${{github.event.release.name}}'
       - run: echo '${{github.event.release.body}}'
       - run: echo '${{github.event.release.description}}'
       - run: echo '${{github.event.release.descriptionHTML}}'
-      - name: webhook
+      - shell: bash
+        env:
+          discord: ${{ secrets.discord }}
         run: |
-          curl -X POST -F 'payload_json={"username": "ツール配信bot","content": "新しいバージョンのリリースのお知らせです😎","embeds": [{"title":"'${github.event.release.name}'","description":"'${github.event.release.body}'","color":51711}]}' "${secrets.discord}"
+          curl -X POST -F 'payload_json={"username": "ツール配信bot","content": "新しいバージョンのリリースのお知らせです😎","embeds": [{"title":"${{github.event.release.name}}","description":"${{github.event.release.body}}","color":51711}]}' "$discord"
