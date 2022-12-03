@@ -13,5 +13,7 @@ jobs:
       - run: echo '${{github.event.release.description}}'
       - run: echo '${{github.event.release.descriptionHTML}}'
       - run: |
-          echo $discord
-          curl -X POST -F 'payload_json={"username": "ツール配信bot","content": "新しいバージョンのリリースのお知らせです😎","embeds": [{"title":"${{github.event.release.name}}","description":"${{github.event.release.body}}","color":51711}]}' "${{ secrets.DISCORD }}"
+          echo $DISCORD
+          curl -X POST -F 'payload_json={"username": "ツール配信bot","content": "新しいバージョンのリリースのお知らせです😎","embeds": [{"title":"${{github.event.release.name}}","description":"${{github.event.release.body}}","color":51711}]}' "$DISCORD"
+        env:
+          DISCORD: ${{secrets.DISCORD}}
